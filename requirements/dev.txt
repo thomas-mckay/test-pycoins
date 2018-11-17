@@ -1,0 +1,5 @@
+-r ./base.txt
+
+exam==0.10.6
+pytest==3.4.2
+pytest-cov==2.5.1

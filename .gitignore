@@ -1,0 +1,22 @@
+# GIT EXCLUSIONS
+.git/
+
+
+# Pycharm
+.idea/
+
+
+# Python specifics
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+*.cache/
+.coverage
+.python-version
+.pytest_cache/
+
+
+# Project_specifics
+.env_pycoins/
+_sandbox/
