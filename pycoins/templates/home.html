@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="jumbotron">
+        <h1>PyCoins</h1>
+        <p>Get alerts on your coin's exchange rates!</p>
+
+        {% if user and user.is_authenticated %}
+            <a class="btn btn-primary btn-lg" href="">Create an alert</a>
+        {% else %}
+            <a class="btn btn-primary" href="{% url 'login' %}">Login</a>
+            <span>&nbsp;or&nbsp;</span>
+            <a class="btn btn-primary" href="{% url 'signup' %}">Create an account</a>
+        {% endif %}
+    </div>
+{% endblock %}

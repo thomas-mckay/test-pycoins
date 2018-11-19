@@ -1,24 +1,53 @@
-"""pycoins URL Configuration
-
-The `urlpatterns` list routes URLs to views. For more information please see:
-    https://docs.djangoproject.com/en/2.1/topics/http/urls/
-Examples:
-Function views
-    1. Add an import:  from my_app import views
-    2. Add a URL to urlpatterns:  path('', views.home, name='home')
-Class-based views
-    1. Add an import:  from other_app.views import Home
-    2. Add a URL to urlpatterns:  path('', Home.as_view(), name='home')
-Including another URLconf
-    1. Import the include() function: from django.urls import include, path
-    2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
-"""
 from django.conf import settings
 from django.contrib import admin
+from django.conf.urls import url
 from django.urls import path, include
+from django.views.generic import TemplateView
+from rest_framework_swagger.views import get_swagger_view
+
+from pycoins.views import account, generic
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/v{}/'.format(settings.API_VERSION), include("pycoins.api.urls")),
+    path('api/v{}/'.format(settings.API_VERSION), include(("pycoins.api.urls", "api"), namespace='api')),
+
+
+    url(r'^$',
+        TemplateView.as_view(template_name="home.html"),
+        name='home'),
+
+    # Signup
+    url(r'^signup/$',
+        TemplateView.as_view(template_name="user/signup.html"),
+        name='signup'),
+    url(r'^account-confirm-email/(?P<key>[-:\w]+)/$',
+        account.confirm_email,
+        name='account_confirm_email'),
+
+    # Login/out
+    url(r'^login/$',
+        TemplateView.as_view(template_name="user/login.html"),
+        name='login'),
+    url(r'^logout/$',
+        TemplateView.as_view(template_name="user/logout.html"),
+        name='logout'),
+
+    # Password
+    url(r'^password-reset/$',
+        TemplateView.as_view(template_name="user/password_reset.html"),
+        name='password-reset'),
+    url(r'^password-reset/confirm/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$',
+        TemplateView.as_view(template_name="user/password_reset_confirm.html"),
+        name='password_reset_confirm'),
+
+    # Current user data
+    url(r'^user-details/$',
+        generic.RestrictedTemplateView.as_view(template_name="user/user_details.html"),
+        name='user-details'),
+
+    # Auto-generated API documentation
+    url(r'^docs/$', get_swagger_view(title='API Docs'), name='api_docs'),
+
+    url(r'^account/', include('allauth.urls')),
 ]

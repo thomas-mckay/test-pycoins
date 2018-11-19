@@ -1,0 +1,9 @@
+<div class="form-group"{% if type == "hidden" %} hidden{% endif %}>
+    <label for="{{ name }}" class="col-sm-2 control-label">{{ label }}</label>
+    <div class="col-sm-10">
+        <input name="{{ name }}" type="{{ type }}" class="form-control" id="{{ name }}" placeholder="{{ label }}">
+        {% if help %}
+            <p class="help-block">{{ help }}</p>
+        {% endif %}
+    </div>
+</div>

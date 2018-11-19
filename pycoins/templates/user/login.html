@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="row">
+        <h3>Login</h3>
+        <hr/>
+        <form class="form-horizontal ajax-form" role="form" action="{% url 'api:rest_login' %}" data-redirect-to="{% url 'home' %}" data-success-event="login-success">
+            {% include 'fragments/form-input.html' with name="username" label="Username" type="text" %}
+            {% include 'fragments/form-input.html' with name="password" label="Password" type="password" %}
+
+            <a href="{% url 'password-reset' %}" class="pull-right">I forgot my password</a>
+
+            {% include 'fragments/form-button.html' with label="Login" %}
+
+            <div class="form-group api-response"></div>
+        </form>
+    </div>
+{% endblock %}
