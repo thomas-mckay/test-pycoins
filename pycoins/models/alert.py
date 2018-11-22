@@ -1,4 +1,7 @@
+from django.conf import settings
+from django.core.mail import send_mail
 from django.db import models
+from django.utils import timezone
 from extended_choices import Choices
 from rest_framework.exceptions import ValidationError
 
@@ -85,4 +88,22 @@ class Alert(models.Model):
 
     def save(self, *args, **kwargs):
         self.validate(raise_errors=True)
+        self.last_sent = None
         return super(Alert, self).save(*args, **kwargs)
+
+    def notify(self):
+        if self.last_sent and not self.message_interval:
+            # We have already notified the user once
+            return
+
+        if (self.last_sent
+            and self.message_interval
+            and timezone.now() - self.message_interval < self.last_sent):
+            # The user has already been notified within the configured interval
+            return
+
+        send_mail('PyCoin Alert',
+                  '{}'.format(self),
+                  settings.DEFAULT_FROM_EMAIL,
+                  [self.user.email])
+

@@ -154,3 +154,9 @@ SWAGGER_SETTINGS = {
     'LOGIN_URL': 'login',
     'LOGOUT_URL': 'logout',
 }
+
+
+COIN_API = {
+    'url': 'https://rest.coinapi.io/v1/',
+    'key': os.getenv('COIN_API_KEY', None),
+}
