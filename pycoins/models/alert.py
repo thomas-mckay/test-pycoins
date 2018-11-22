@@ -23,17 +23,18 @@ class Alert(models.Model):
         ('EVOLUTION', 3, 'Evolution'),
     )
 
-    coin = models.ForeignKey('Symbol', null=False, blank=False,
+    coin = models.ForeignKey('Symbol', null=False, blank=False, db_index=True,
                              on_delete=models.PROTECT, limit_choices_to={'type': Symbol.TYPE_CHOICES.COIN},
                              related_name='coin_alerts')  # the related name is meaningless in our case,
                                                           # but Django needs to be indulged here
-    currency = models.ForeignKey('Symbol', null=False, blank=False,
+    currency = models.ForeignKey('Symbol', null=False, blank=False, db_index=True,
                                  on_delete=models.PROTECT, limit_choices_to={'type': Symbol.TYPE_CHOICES.CURRENCY},
                                  related_name='currency_alerts')  # the related name is meaningless in our case,
                                                                   # but Django needs to be indulged here
 
 
-    user = models.ForeignKey('auth.User', related_name='alerts', null=False, blank=False, on_delete=models.CASCADE)
+    user = models.ForeignKey('auth.User', null=False, blank=False, db_index=True,
+                             related_name='alerts', on_delete=models.CASCADE)
 
     trigger_type = models.PositiveSmallIntegerField(choices=TRIGGER_TYPE_CHOICES, null=False, blank=False)
 
@@ -47,7 +48,7 @@ class Alert(models.Model):
     # Alerting settings
     last_sent = models.DateTimeField(null=True, blank=True)
     message_interval = models.DurationField(null=True, blank=True)
-    activated = models.BooleanField(null=True, blank=True)
+    activated = models.BooleanField(null=True, blank=True, db_index=True)
 
     objects = AlertManager()
 
