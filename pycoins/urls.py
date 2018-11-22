@@ -5,7 +5,7 @@ from django.urls import path, include
 from django.views.generic import TemplateView
 from rest_framework_swagger.views import get_swagger_view
 
-from pycoins.views import account, generic
+from pycoins.views import account, alert, generic
 
 
 urlpatterns = [
@@ -48,6 +48,19 @@ urlpatterns = [
 
     # Auto-generated API documentation
     url(r'^docs/$', get_swagger_view(title='API Docs'), name='api_docs'),
+
+    # Alerts
+    url(r'^alerts/$',
+        alert.AlertListView.as_view(template_name="alert/list.html"),
+        name='user-alerts'),
+
+    url(r'^alerts/create/$',
+        alert.AlertView.as_view(),
+        name='user-alert-create'),
+
+    url(r'^alerts/(?P<pk>\d+)/$',
+        alert.AlertView.as_view(),
+        name='user-alert-change'),
 
     url(r'^account/', include('allauth.urls')),
 ]
