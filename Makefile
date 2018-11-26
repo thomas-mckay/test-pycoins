@@ -20,7 +20,8 @@ dependencies:
 	pip install -r requirements/dev.txt
 
 test:
-	pytest tests/ -vvs --cov-report term --cov=pycoins --color=yes
+	DJANGO_SETTINGS_MODULE=pycoins.settings.test coverage run --source='./pycoins' manage.py test
+	coverage report -m
 
 test-lf:
 	pytest tests/ -vvs --lf
