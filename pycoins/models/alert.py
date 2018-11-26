@@ -1,8 +1,11 @@
+from datetime import timedelta
+
 from django.conf import settings
 from django.core.mail import send_mail
 from django.db import models
 from django.utils import timezone
 from extended_choices import Choices
+from rest_framework.compat import MinValueValidator, MaxValueValidator
 from rest_framework.exceptions import ValidationError
 
 from pycoins.models.symbol import Symbol
@@ -39,11 +42,11 @@ class Alert(models.Model):
     trigger_type = models.PositiveSmallIntegerField(choices=TRIGGER_TYPE_CHOICES, null=False, blank=False)
 
     # For FIXED trigger types
-    amount = models.FloatField(null=True, blank=True)
+    amount = models.FloatField(null=True, blank=True, validators=[MinValueValidator(0)])
 
     # For EVOLUTION trigger type
-    evolution = models.FloatField(null=True, blank=True)
-    evolution_period = models.DurationField(null=True, blank=True)
+    evolution = models.FloatField(null=True, blank=True, validators=[MinValueValidator(0)])
+    evolution_period = models.DurationField(null=True, blank=True, validators=[MaxValueValidator(timedelta(days=5*365))])
 
     # Alerting settings
     last_sent = models.DateTimeField(null=True, blank=True)
