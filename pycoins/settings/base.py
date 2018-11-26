@@ -36,6 +36,7 @@ INSTALLED_APPS = [
     'rest_auth.registration',
     'allauth',
     'allauth.account',
+    'allauth.socialaccount',
     'rest_framework_swagger',
 
     'django_extensions',
