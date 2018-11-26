@@ -76,11 +76,11 @@ class PyCoinsTestCase(Exam, TestCase):
     @fixture
     def alert_lower(self):
         return Alert.objects.create(
-            coin=self.bitcoin,
-            currency=self.us_dollar,
+            coin=self.ethereum,
+            currency=self.euro,
             user=self.user,
             trigger_type=Alert.TRIGGER_TYPE_CHOICES.LOWER,
-            amount=3500,
+            amount=4000,
             activated=True,
         )
 
@@ -99,7 +99,7 @@ class PyCoinsTestCase(Exam, TestCase):
     def alert_evolution(self):
         return Alert.objects.create(
             coin=self.bitcoin,
-            currency=self.us_dollar,
+            currency=self.euro,
             user=self.user,
             trigger_type=Alert.TRIGGER_TYPE_CHOICES.EVOLUTION,
             evolution=20,

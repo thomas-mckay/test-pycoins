@@ -1,6 +1,7 @@
 -r ./base.txt
 
 exam==0.10.6
+responses==0.10.4
 
 pygments==2.2.0
 sqlparse==0.2.4
