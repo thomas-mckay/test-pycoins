@@ -37,6 +37,8 @@ INSTALLED_APPS = [
     'allauth',
     'allauth.account',
     'rest_framework_swagger',
+
+    'django_extensions',
 ]
 
 MIDDLEWARE = [

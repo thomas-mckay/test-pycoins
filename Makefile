@@ -3,6 +3,9 @@ SHELL:=/bin/bash
 runserver:
 	DJANGO_SETTINGS_MODULE=pycoins.settings.local python manage.py runserver 8080
 
+shell-plus:
+	DJANGO_SETTINGS_MODULE=pycoins.settings.local python manage.py shell_plus --print-sql
+
 makemigrations:
 	DJANGO_SETTINGS_MODULE=pycoins.settings.local python manage.py makemigrations
 

@@ -3,3 +3,4 @@ djangorestframework==3.9.0
 django-rest-auth[with_social]==0.9.3
 djangorestframework-jwt==1.11.0
 django-extended-choices==1.3
+django-extensions==2.1.4
