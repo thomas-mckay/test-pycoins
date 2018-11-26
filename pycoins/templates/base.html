@@ -33,6 +33,10 @@
                         {% if user and user.is_authenticated %}
                             <li><a href="{% url 'user-alerts' %}">My alerts</a></li>
                             <li><a href="{% url 'user-details' %}">My account</a></li>
+                            {% if user.is_staff %}
+                                <li><a href="{% url 'api:user-list' %}">All users</a></li>
+                                <li><a href="{% url 'admin:index' %}">Admin</a></li>
+                            {% endif %}
                             <li class="divider"></li>
                             <li>
                                 <a class="ajax-link" href="{% url 'api:rest_logout' %}" data-method="POST"
@@ -58,7 +62,7 @@
             <div class="collapse navbar-collapse">
                 <ul class="nav navbar-nav">
                     <li class="active"><a href="/">Home</a></li>
-                    <li><a target="_blank" href="https://github.com/thomas-mckay/pycoins">Source code</a></li>
+                    <li><a target="_blank" href="https://github.com/thomas-mckay/test-pycoins">Source code</a></li>
                     <li><a target="_blank" href="{% url 'api_docs' %}">API Docs</a></li>
                 </ul>
             </div><!--/.nav-collapse -->
