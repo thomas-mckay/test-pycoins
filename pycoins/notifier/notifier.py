@@ -32,15 +32,18 @@ class Notifier(object):
             fixed_alerts = (Alert.objects
                             .filter(coin=rate.coin, currency=rate.currency, activated=True)
                             .filter(Q(trigger_type=Alert.TRIGGER_TYPE_CHOICES.LOWER, amount__gte=rate.value)
-                                    | Q(trigger_type=Alert.TRIGGER_TYPE_CHOICES.GREATER, amount__lte=rate.value)))
+                                    | Q(trigger_type=Alert.TRIGGER_TYPE_CHOICES.GREATER, amount__lte=rate.value))
+                            .select_related('coin', 'currency')
+                            .prefetch_related('user'))
 
             for alert in fixed_alerts:
                 alert.notify()
 
-            evolution_alerts = Alert.objects.filter(coin=rate.coin,
-                                                   currency=rate.currency,
-                                                   activated=True,
-                                                   trigger_type=Alert.TRIGGER_TYPE_CHOICES.EVOLUTION)
+            evolution_alerts = (Alert.objects
+                                .filter(coin=rate.coin, currency=rate.currency, activated=True,
+                                        trigger_type=Alert.TRIGGER_TYPE_CHOICES.EVOLUTION)
+                                .select_related('coin', 'currency')
+                                .prefetch_related('user'))
 
             for alert in evolution_alerts:
                 """
@@ -53,7 +56,10 @@ class Notifier(object):
                                               ).aggregate(min=Min('value'),
                                                           max=Max('value'))
 
-                evolution = ((min_max['max'] - min_max['min']) / min_max['min']) * 100
 
-                if evolution >= alert.evolution:
+                evolution = 0
+                if min_max['max'] is not None and min_max['min'] is not None:
+                    evolution = ((min_max['max'] - min_max['min']) / min_max['min']) * 100
+
+                if evolution > alert.evolution:
                     alert.notify()
