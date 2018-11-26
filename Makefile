@@ -12,6 +12,9 @@ makemigrations:
 migrate:
 	DJANGO_SETTINGS_MODULE=pycoins.settings.local python manage.py migrate
 
+notify:
+	DJANGO_SETTINGS_MODULE=pycoins.settings.local python manage.py notify
+
 dependencies:
 	pip install --upgrade pip
 	pip install -r requirements/dev.txt
