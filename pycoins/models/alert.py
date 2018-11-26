@@ -111,3 +111,5 @@ class Alert(models.Model):
                   settings.DEFAULT_FROM_EMAIL,
                   [self.user.email])
 
+        self.update(last_sent=timezone.now())
+
