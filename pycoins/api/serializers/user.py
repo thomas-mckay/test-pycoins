@@ -3,7 +3,7 @@ from rest_framework import serializers
 
 
 class UserSerializer(serializers.HyperlinkedModelSerializer):
-    id = serializers.HyperlinkedIdentityField(view_name='api:user-detail', lookup_field='pk')
+    id = serializers.HyperlinkedIdentityField(view_name='api:user-detail')
 
     class Meta:
         model = User
