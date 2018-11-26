@@ -21,17 +21,11 @@ urlpatterns = [
     url(r'^signup/$',
         TemplateView.as_view(template_name="user/signup.html"),
         name='signup'),
-    url(r'^account-confirm-email/(?P<key>[-:\w]+)/$',
-        account.confirm_email,
-        name='account_confirm_email'),
 
     # Login/out
     url(r'^login/$',
         TemplateView.as_view(template_name="user/login.html"),
         name='login'),
-    url(r'^logout/$',
-        TemplateView.as_view(template_name="user/logout.html"),
-        name='logout'),
 
     # Password
     url(r'^password-reset/$',
@@ -63,4 +57,8 @@ urlpatterns = [
         name='user-alert-change'),
 
     url(r'^account/', include('allauth.urls')),
+
+    url(r'^account-confirm-email/(?P<key>[-:\w]+)/$',
+        account.confirm_email,
+        name='account_confirm_email'),
 ]
