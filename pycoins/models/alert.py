@@ -79,7 +79,7 @@ class Alert(models.Model):
             self.amount = None
 
         else:
-            if not self.amount:
+            if self.amount is None:
                 errors.append('`amount` parameter is required for fixed alerts.')
 
             self.evolution = None
@@ -97,7 +97,7 @@ class Alert(models.Model):
 
     def notify(self):
         if self.last_sent and not self.message_interval:
-            # We have already notified the user once
+            # We have already notified the user once and alert is not set to repeat
             return
 
         if (self.last_sent
@@ -111,5 +111,9 @@ class Alert(models.Model):
                   settings.DEFAULT_FROM_EMAIL,
                   [self.user.email])
 
-        self.update(last_sent=timezone.now())
+        self.update_last_sent()
+
+    def update_last_sent(self):
+        # Bypass the save method (it resets the 'last_sent' field)
+        self.__class__.objects.filter(pk=self.pk).update(last_sent=timezone.now())
 
