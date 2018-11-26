@@ -5,7 +5,7 @@
         <h3>Update Alert Details</h3>
         <hr/>
 
-        <form class="form-horizontal ajax-form" id="alert-detail" role="form" action="{{ action_url }}" data-method="{{ method }}">
+        <form class="form-horizontal ajax-form" id="alert-detail" role="form" action="{{ action_url }}" data-method="{{ method }}" data-redirect-to="{% url 'user-alerts' %}">
             {% include 'fragments/form-input.html' with name="coin" label="Coin" type="select" choices=coin_choices %}
             {% include 'fragments/form-input.html' with name="currency" label="Currency" type="select" choices=currency_choices %}
 
@@ -27,8 +27,6 @@
 
 {% block script %}
     <script type="text/javascript">
-        let app_context = {{ frontend_app_context|safe }};
-
         $(document).ready(function () {
             $(document).on('alertDataReceived', function(event, data) {
                 $('select[name=coin]').val(data.coin).change();
