@@ -17,7 +17,7 @@ class EmailConfirmationView(VerifyEmailView):
         else:
             query['info'] = response.content['detail']
 
-        return HttpResponseRedirect("{}?{}".format(reverse('home'), urlencode(query)))
+        return HttpResponseRedirect("{}?{}".format(reverse('login'), urlencode(query)))
 
 
 confirm_email = EmailConfirmationView.as_view()
