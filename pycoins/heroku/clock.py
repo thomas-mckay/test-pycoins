@@ -15,7 +15,8 @@ def notify():
 
 
 if __name__ == '__main__':
+    from django.conf import settings
     q = Queue(connection=conn)
     sched = BlockingScheduler()
-    sched.scheduled_job('interval', minutes=30)(notify)
+    sched.scheduled_job('interval', minutes=settings.HEROKU_JOB_INTERVAL)(notify)
     sched.start()

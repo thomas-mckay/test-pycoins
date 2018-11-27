@@ -15,4 +15,6 @@ EMAIL_PORT = os.environ.get('MAILGUN_SMTP_PORT', '')
 EMAIL_HOST_USER = os.environ.get('MAILGUN_SMTP_LOGIN', '')
 EMAIL_HOST_PASSWORD = os.environ.get('MAILGUN_SMTP_PASSWORD', '')
 
+HEROKU_JOB_INTERVAL = int(os.environ.get('HEROKU_JOB_INTERVAL', 30))
+
 django_heroku.settings(locals())
