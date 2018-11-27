@@ -17,11 +17,16 @@ notify:
 
 dependencies:
 	pip install --upgrade pip
+	pip install -r requirements/base.txt
+
+dependencies-heroku:
+	pip install --upgrade pip
+	pip install -r requirements/heroku.txt
+
+dependencies-dev:
+	pip install --upgrade pip
 	pip install -r requirements/dev.txt
 
 test:
 	DJANGO_SETTINGS_MODULE=pycoins.settings.test coverage run --source='./pycoins' manage.py test
 	coverage report -m
-
-test-lf:
-	pytest tests/ -vvs --lf
